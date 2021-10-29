@@ -47,6 +47,8 @@ class MyHomePageState extends State<MyHomePage> {
   int yourLives = maxLives;
   int enemyLives = maxLives;
 
+  String fightInfoText = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,7 +69,9 @@ class MyHomePageState extends State<MyHomePage> {
                   width: double.infinity,
                   child: ColoredBox(
                     color: FightClubColors.boxBackground,
-                    child: InfoText(text: "Lose\n Your Won"),
+                    child: InfoText(
+                      text: fightInfoText,
+                    ),
                   ),
                 ),
               ),
@@ -101,6 +105,17 @@ class MyHomePageState extends State<MyHomePage> {
     }
   }
 
+//  String _fightInfoText() {
+//       else {
+//      if ((attackingBodyPart == whatEnemyDefends) &&
+//          (defendingBodyPart == whatEnemyAttacks))
+//        return "Your attack was blocked.\nEnemy’s attack was blocked.";
+//      else if ((attackingBodyPart != whatEnemyDefends) &&
+//          (defendingBodyPart != whatEnemyAttacks)) return (_whatAttacking());
+//      else return "none";
+//    }
+//  }
+
   void _onGoButtonClicked() {
     if (yourLives == 0 || enemyLives == 0) {
       setState(() {
@@ -116,6 +131,22 @@ class MyHomePageState extends State<MyHomePage> {
         }
         if (youLoseLife) {
           yourLives -= 1;
+        }
+
+        if (yourLives == 0 && enemyLives == 0) {
+          fightInfoText = "Draw";
+        } else if (yourLives == 0) {
+          fightInfoText = "You lost";
+        } else if (yourLives > 0 && enemyLives == 0) {
+          fightInfoText = "You won";
+        } else {
+          String upperLine = enemyLoseLife
+              ? "You hit enemy’s ${attackingBodyPart!.name.toLowerCase()}."
+              : "Enemy’s attack was blocked.";
+          String buttomLine = youLoseLife
+              ? "Enemy hit your ${whatEnemyAttacks.name.toLowerCase()}."
+              : "Your attack was blocked.";
+          fightInfoText = "$upperLine\n$buttomLine";
         }
 
         whatEnemyDefends = BodyPart.random();
@@ -354,7 +385,8 @@ class FightersInfo extends StatelessWidget {
                     children: [
                       SizedBox(height: 16),
                       Text("Enemy",
-                          style: TextStyle(color: FightClubColors.darkGreyText)),
+                          style:
+                              TextStyle(color: FightClubColors.darkGreyText)),
                       SizedBox(height: 12),
                       Image.asset(FightClubImages.enemyAvatar,
                           width: 92, height: 92)
@@ -397,7 +429,8 @@ class LivesWidget extends StatelessWidget {
       children: List.generate(overallLivesCount, (index) {
         if (index < currentLivesCount) {
           return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 2.0),
+            padding:
+                EdgeInsets.only(bottom: index < overallLivesCount - 1 ? 4 : 0),
             child: Image.asset(
               FightClubIcons.heartFull,
               width: 18,
@@ -406,7 +439,8 @@ class LivesWidget extends StatelessWidget {
           );
         } else {
           return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 2.0),
+            padding:
+                EdgeInsets.only(bottom: index < overallLivesCount - 1 ? 4 : 0),
             child: Image.asset(
               FightClubIcons.heartEmpty,
               width: 18,
