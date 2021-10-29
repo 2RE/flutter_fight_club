@@ -45,7 +45,7 @@ class MyHomePageState extends State<MyHomePage> {
   BodyPart whatEnemyDefends = BodyPart.random();
 
   int yourLives = maxLives;
-  int enemyLives = maxLives;
+  int enemysLives = maxLives;
 
   String fightInfoText = "";
 
@@ -59,7 +59,7 @@ class MyHomePageState extends State<MyHomePage> {
             FightersInfo(
               maxLivesCount: maxLives,
               yourLivesCount: yourLives,
-              enemyLivesCount: enemyLives,
+              enemyLivesCount: enemysLives,
             ),
             Expanded(
               child: Padding(
@@ -84,7 +84,7 @@ class MyHomePageState extends State<MyHomePage> {
             ),
             SizedBox(height: 14),
             GoButton(
-              text: yourLives == 0 || enemyLives == 0 ? "Start new Game" : "Go",
+              text: yourLives == 0 || enemysLives == 0 ? "Start new Game" : "Go",
               onTap: _onGoButtonClicked,
               color: _getGoButtonColor(),
             ),
@@ -96,7 +96,7 @@ class MyHomePageState extends State<MyHomePage> {
   }
 
   Color _getGoButtonColor() {
-    if (yourLives == 0 || enemyLives == 0) {
+    if (yourLives == 0 || enemysLives == 0) {
       return FightClubColors.blackButton;
     } else if (attackingBodyPart == null || defendingBodyPart == null) {
       return FightClubColors.greyButton;
@@ -117,27 +117,27 @@ class MyHomePageState extends State<MyHomePage> {
 //  }
 
   void _onGoButtonClicked() {
-    if (yourLives == 0 || enemyLives == 0) {
+    if (yourLives == 0 || enemysLives == 0) {
       setState(() {
         yourLives = maxLives;
-        enemyLives = maxLives;
+        enemysLives = maxLives;
       });
     } else if (attackingBodyPart != null && defendingBodyPart != null)
       setState(() {
         final bool enemyLoseLife = attackingBodyPart != whatEnemyDefends;
         final bool youLoseLife = defendingBodyPart != whatEnemyAttacks;
         if (enemyLoseLife) {
-          enemyLives -= 1;
+          enemysLives -= 1;
         }
         if (youLoseLife) {
           yourLives -= 1;
         }
 
-        if (yourLives == 0 && enemyLives == 0) {
+        if (yourLives == 0 && enemysLives == 0) {
           fightInfoText = "Draw";
         } else if (yourLives == 0) {
           fightInfoText = "You lost";
-        } else if (yourLives > 0 && enemyLives == 0) {
+        } else if (enemysLives == 0) {
           fightInfoText = "You won";
         } else {
           String upperLine = enemyLoseLife
@@ -154,11 +154,12 @@ class MyHomePageState extends State<MyHomePage> {
 
         attackingBodyPart = null;
         defendingBodyPart = null;
+
       });
   }
 
   void _selectDefendingBodyPart(final BodyPart value) {
-    if (yourLives == 0 || enemyLives == 0) {
+    if (yourLives == 0 || enemysLives == 0) {
       return;
     }
     setState(() {
@@ -167,7 +168,7 @@ class MyHomePageState extends State<MyHomePage> {
   }
 
   void _selectAttackingBodyPart(final BodyPart value) {
-    if (yourLives == 0 || enemyLives == 0) {
+    if (yourLives == 0 || enemysLives == 0) {
       return;
     }
     setState(() {
