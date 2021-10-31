@@ -65,18 +65,16 @@ class MyHomePageState extends State<MyHomePage> {
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 30, horizontal: 16),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ColoredBox(
-                    color: FightClubColors.boxBackground,
+                child: ColoredBox(
+                  color: FightClubColors.boxBackground,
+                  child: SizedBox(
+                    width: double.infinity,
                     child: Center(
                       child: Text(fightInfoText,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 10,
-                          color: FightClubColors.darkGreyText,
-                        ),
-                        textAlign: TextAlign.center),
+                          style: TextStyle(
+                            color: FightClubColors.darkGreyText,
+                          ),
+                          textAlign: TextAlign.center),
                     ),
                   ),
                 ),
@@ -90,7 +88,8 @@ class MyHomePageState extends State<MyHomePage> {
             ),
             SizedBox(height: 14),
             GoButton(
-              text: yourLives == 0 || enemysLives == 0 ? "Start new Game" : "Go",
+              text:
+                  yourLives == 0 || enemysLives == 0 ? "Start new Game" : "Go",
               onTap: _onGoButtonClicked,
               color: _getGoButtonColor(),
             ),
@@ -137,10 +136,10 @@ class MyHomePageState extends State<MyHomePage> {
         } else {
           String upperLine = enemyLoseLife
               ? "You hit enemy’s ${attackingBodyPart!.name.toLowerCase()}."
-              : "Enemy’s attack was blocked.";
+              : "Your attack was blocked.";
           String buttomLine = youLoseLife
               ? "Enemy hit your ${whatEnemyAttacks.name.toLowerCase()}."
-              : "Your attack was blocked.";
+              : "Enemy’s attack was blocked.";
           fightInfoText = "$upperLine\n$buttomLine";
         }
 
@@ -149,7 +148,6 @@ class MyHomePageState extends State<MyHomePage> {
 
         attackingBodyPart = null;
         defendingBodyPart = null;
-
       });
   }
 
@@ -251,6 +249,7 @@ class ControlsWidget extends StatelessWidget {
     );
   }
 }
+
 class GoButton extends StatelessWidget {
   final String text;
   final VoidCallback onTap;
