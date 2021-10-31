@@ -69,8 +69,14 @@ class MyHomePageState extends State<MyHomePage> {
                   width: double.infinity,
                   child: ColoredBox(
                     color: FightClubColors.boxBackground,
-                    child: InfoText(
-                      text: fightInfoText,
+                    child: Center(
+                      child: Text(fightInfoText,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 10,
+                          color: FightClubColors.darkGreyText,
+                        ),
+                        textAlign: TextAlign.center),
                     ),
                   ),
                 ),
@@ -104,17 +110,6 @@ class MyHomePageState extends State<MyHomePage> {
       return FightClubColors.blackButton;
     }
   }
-
-//  String _fightInfoText() {
-//       else {
-//      if ((attackingBodyPart == whatEnemyDefends) &&
-//          (defendingBodyPart == whatEnemyAttacks))
-//        return "Your attack was blocked.\nEnemy’s attack was blocked.";
-//      else if ((attackingBodyPart != whatEnemyDefends) &&
-//          (defendingBodyPart != whatEnemyAttacks)) return (_whatAttacking());
-//      else return "none";
-//    }
-//  }
 
   void _onGoButtonClicked() {
     if (yourLives == 0 || enemysLives == 0) {
@@ -256,29 +251,6 @@ class ControlsWidget extends StatelessWidget {
     );
   }
 }
-
-class InfoText extends StatelessWidget {
-  final String text;
-
-  const InfoText({
-    Key? key,
-    required this.text,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(text,
-          style: TextStyle(
-            fontWeight: FontWeight.w400,
-            fontSize: 10,
-            color: FightClubColors.darkGreyText,
-          ),
-          textAlign: TextAlign.center),
-    );
-  }
-}
-
 class GoButton extends StatelessWidget {
   final String text;
   final VoidCallback onTap;
